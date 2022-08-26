@@ -80,9 +80,27 @@ const Controller = ((model, view) => {
     let totalCredits = 0;
     let selectedlist = [];
     
+
+
+
     candidateContainer.addEventListener('click', (event) => {
       totalCredits = 0;
       document.getElementById("sum-of-credit").innerHTML = totalCredits;
+
+      let allselecteddom = document.getElementsByClassName('selected-course');
+
+      if (event.target.className === "unselected-course") {
+        for (const selecteddom of allselecteddom) {
+          totalCredits += parseInt(selecteddom.getAttribute("data-coursecredit"));
+        }
+        if (totalCredits + parseInt(event.target.getAttribute("data-coursecredit")) > 18) {
+          alert("you can't select more than 18 credits!");
+          document.getElementById("sum-of-credit").innerHTML = totalCredits;
+          return
+        }
+      }
+
+      totalCredits = 0;
 
       // Toggle class item to be either selected or non-selected
       if (event.target.className === "unselected-course") {
@@ -91,7 +109,7 @@ const Controller = ((model, view) => {
         event.target.className = "unselected-course";
       }
 
-      const allselecteddom = document.getElementsByClassName('selected-course');
+      allselecteddom = document.getElementsByClassName('selected-course');
 
       for (const selecteddom of allselecteddom) {
         totalCredits += parseInt(selecteddom.getAttribute("data-coursecredit"));
