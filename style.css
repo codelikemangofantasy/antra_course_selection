@@ -1,0 +1,157 @@
+:root {
+    --height-header: 60px;
+    --height-todolist: 300px;
+    --height-todolist-header: 30px;
+  
+    --width-todolist: 400px;
+  
+    --color-white: white;
+    --color-red-button: rgb(148, 21, 21);
+    --color-red-li-hover: rgb(27, 172, 8);
+  }
+  
+  html,
+  body {
+    width: 100vw;
+    height: 100vh;
+    /* overflow: hidden; */
+  }
+  
+  /* css reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif ;
+  }
+  
+  .header {
+    height: var(--height-header);
+    width: 100%;
+    
+    background: rgba(253, 251, 251, 0)
+    color: black;
+    padding: 50px;
+    
+  
+    font-size: 3rem;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+    font-weight: 700;
+
+    display: flex;
+    justify-content: center;
+  }
+  
+  .content
+    {
+    background-color: white;
+  
+    height: calc(100% - var(--height-header));
+    width: 100%;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  section {
+    display: inline-block;
+  }
+
+  .courselist{
+
+    border-color: black;
+    border-radius: 1px;
+
+    /* position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+  }
+
+  .main-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+
+  .main-container .courselist {
+    width: 200px;
+    height: 300px;
+    border: 1px solid black;
+  }
+
+  #course_list {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+
+    
+  }
+  
+  .courses__header
+  ul li {
+    height: var(--height-todolist-header);
+    line-height: var(--height-todolist-header);
+    width: 100%;
+  
+    padding-left: 10px;
+  
+    border: 2px;
+    outline: 2px;
+  
+    font-size: 1rem;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+  
+    list-style: none;
+
+  }
+  .courses__header {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  ul li {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+
+  }
+  ul li span {
+    overflow: hidden;
+    border: 2px;
+    outline: 2px;
+  }
+  ul li button {
+    margin-right: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: brown;
+    font-size: 1.4rem;
+  }
+  ul li button:hover {
+    font-size: 1.6rem;
+  }
+  ul li button:active {
+    font-size: 1.3rem;
+  }
+  ul li:nth-child(2n) {
+    background-color: rgb(221, 239, 221);
+  }
+  ul {
+    height: calc(100% - var(--height-todolist-header) * 1);
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  li div {
+    width: 100%;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  ul li.selected-course {
+    background-color: blue;
+  }
+  
