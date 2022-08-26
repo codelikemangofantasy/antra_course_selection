@@ -81,7 +81,10 @@ const Controller = ((model, view) => {
     let selectedlist = [];
     
     candidateContainer.addEventListener('click', (event) => {
-      selectedlist = []
+      selectedlist = [];
+      totalCredits = 0;
+      document.getElementById("sum-of-credit").innerHTML = "0";
+
       // Toggle class item to be either selected or non-selected
       if (event.target.className === "unselected-course") {
         event.target.className = "selected-course";
@@ -94,6 +97,8 @@ const Controller = ((model, view) => {
       for (const selecteddom of allselecteddom) {
 
         totalCredits += parseInt(selecteddom.getAttribute("data-coursecredit"));
+
+        document.getElementById("sum-of-credit").innerHTML = totalCredits;
 
         const course = new model.Course(
           parseInt(selecteddom.getAttribute("data-courseid")),

@@ -47,7 +47,7 @@
     {
     background-color: white;
   
-    height: calc(100% - var(--height-header));
+    height: calc(70% - var(--height-header));
     width: 100%;
   
     display: flex;
@@ -155,3 +155,16 @@
     background-color: blue;
   }
   
+  .info-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .info {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .info div {
+    width: 6rem;
+  }
