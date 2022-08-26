@@ -168,3 +168,10 @@
   .info div {
     width: 6rem;
   }
+
+  #select-button {
+    border: 1px solid grey;
+    border-radius: 2px;
+    text-align: center;
+    cursor: pointer;
+  }

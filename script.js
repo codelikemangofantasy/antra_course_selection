@@ -81,9 +81,8 @@ const Controller = ((model, view) => {
     let selectedlist = [];
     
     candidateContainer.addEventListener('click', (event) => {
-      selectedlist = [];
       totalCredits = 0;
-      document.getElementById("sum-of-credit").innerHTML = "0";
+      document.getElementById("sum-of-credit").innerHTML = totalCredits;
 
       // Toggle class item to be either selected or non-selected
       if (event.target.className === "unselected-course") {
@@ -95,26 +94,51 @@ const Controller = ((model, view) => {
       const allselecteddom = document.getElementsByClassName('selected-course');
 
       for (const selecteddom of allselecteddom) {
-
         totalCredits += parseInt(selecteddom.getAttribute("data-coursecredit"));
-
         document.getElementById("sum-of-credit").innerHTML = totalCredits;
+      }
+    })
 
+  }
+
+  const confirmSelect = () => {
+    const selectButton = document.getElementById("select-button");
+    
+    selectButton.addEventListener('click', (event) => {
+      let selectedlist = [];
+      // selectButton.disabled = true;
+      debugger;
+      const allselecteddom = document.getElementsByClassName('selected-course');
+
+      for (const selecteddom of allselecteddom) {
         const course = new model.Course(
           parseInt(selecteddom.getAttribute("data-courseid")),
-          parseInt(selecteddom.getAttribute("data-coursecredit")),
           selecteddom.getAttribute("data-coursename"),
           selecteddom.getAttribute("data-coursetype"),
+          parseInt(selecteddom.getAttribute("data-coursecredit")),
         )
-
         selectedlist.push(course);
       }
 
       console.log(selectedlist)
 
+      let tmp = '';
+      selectedlist.forEach((course) => {
+        tmp += `
+          <li class="unselected-course" data-courseid="${course.courseId}" data-coursecredit="${course.credit}" data-coursetype="${course.required ? "Compulsory" : "Elective"}" data-coursename="${course.courseName}">
+            <div class="attr-container">
+              <div>${course.courseName}</div>
+              <div>Course Type: ${course.required ? "Compulsory" : "Elective"}</div>
+              <div>Course Credit: ${course.courseCredit}</div>
+            </div>
+          </li>
+        `;
+      });
+
+      let selectedcourselistContainer = document.getElementById("selectedcourselist_container");
+      selectedcourselistContainer.innerHTML = tmp;
+
     })
-
-
   }
 
   // const addTodo = () => {
@@ -140,6 +164,7 @@ const Controller = ((model, view) => {
   const bootstrap = () => {
     init();
     toggleCourse();
+    confirmSelect();
   };
 
   return {
