@@ -104,7 +104,11 @@ const Controller = ((model, view) => {
   const confirmSelect = () => {
     const selectButton = document.getElementById("select-button");
     
-    selectButton.addEventListener('click', (event) => {
+    selectButton.addEventListener('click', (event) => {    
+      if (document.getElementById("selectedcourselist_container").children.length > 0) {
+        return
+      }
+
       let selectedlist = [];
       // selectButton.disabled = true;
       debugger;
