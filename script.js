@@ -5,6 +5,7 @@ import { Api } from './api.js'
 const View = (() => {
   const domstr = {
     candidateContainer: '#courselist_containter',
+    selectedContainer: "#selectedcourselist_container",
   };
 
   const render = (ele, tmp) => {
@@ -46,7 +47,6 @@ const Model = ((api, view) => {
   }
   class State {
     #candidatelist = [];
-    #selectedlist = [];
 
     get candidatelist() {
       return this.#candidatelist;
@@ -80,9 +80,6 @@ const Controller = ((model, view) => {
     let totalCredits = 0;
     let selectedlist = [];
     
-
-
-
     candidateContainer.addEventListener('click', (event) => {
       totalCredits = 0;
       document.getElementById("sum-of-credit").innerHTML = totalCredits;
@@ -94,7 +91,7 @@ const Controller = ((model, view) => {
           totalCredits += parseInt(selecteddom.getAttribute("data-coursecredit"));
         }
         if (totalCredits + parseInt(event.target.getAttribute("data-coursecredit")) > 18) {
-          alert("you can't select more than 18 credits!");
+          alert("You cannot choose more than 18 credits in one semester!");
           document.getElementById("sum-of-credit").innerHTML = totalCredits;
           return
         }
@@ -123,16 +120,15 @@ const Controller = ((model, view) => {
     const selectButton = document.getElementById("select-button");
     
     selectButton.addEventListener('click', (event) => {    
-      if (document.getElementById("selectedcourselist_container").children.length > 0) {
-        return
-      }
-
       let selectedlist = [];
-      // selectButton.disabled = true;
-      debugger;
+      let nonselectedlist = [];
+      let totalCredits = 0;
+
+      // Collect all selected courses
       const allselecteddom = document.getElementsByClassName('selected-course');
 
       for (const selecteddom of allselecteddom) {
+        totalCredits += parseInt(selecteddom.getAttribute("data-coursecredit"));
         const course = new model.Course(
           parseInt(selecteddom.getAttribute("data-courseid")),
           selecteddom.getAttribute("data-coursename"),
@@ -142,39 +138,35 @@ const Controller = ((model, view) => {
         selectedlist.push(course);
       }
 
-      console.log(selectedlist)
+      // Collect all non-selected courses
+      const allnonselecteddom = document.getElementsByClassName('unselected-course');
 
-      let tmp = '';
-      selectedlist.forEach((course) => {
-        tmp += `
-          <li class="unselected-course" data-courseid="${course.courseId}" data-coursecredit="${course.credit}" data-coursetype="${course.required ? "Compulsory" : "Elective"}" data-coursename="${course.courseName}">
-            <div class="attr-container">
-              <div>${course.courseName}</div>
-              <div>Course Type: ${course.required ? "Compulsory" : "Elective"}</div>
-              <div>Course Credit: ${course.courseCredit}</div>
-            </div>
-          </li>
-        `;
-      });
+      for (const nonselected of allnonselecteddom) {
+        const course = new model.Course(
+          parseInt(nonselected.getAttribute("data-courseid")),
+          nonselected.getAttribute("data-coursename"),
+          nonselected.getAttribute("data-coursetype"),
+          parseInt(nonselected.getAttribute("data-coursecredit")),
+        )
+        nonselectedlist.push(course);
+      }
 
-      let selectedcourselistContainer = document.getElementById("selectedcourselist_container");
-      selectedcourselistContainer.innerHTML = tmp;
+      if (confirm("You have chosen " + totalCredits + " credits for this semester. You cannot change once you submit. Do you want to confirm?")) {
 
+        // Disable select button only after confirming selection
+        event.target.disabled = true;
+
+        // Re-render selected courses
+        const selectedcourselistContainer = document.querySelector(view.domstr.selectedContainer);
+        const tmpSelected = view.createTmp(selectedlist);
+        view.render(selectedcourselistContainer, tmpSelected);
+        // Re-render non-selected courses
+        const candidateContainer = document.querySelector(view.domstr.candidateContainer);
+        const tmpNonselected = view.createTmp(nonselectedlist);
+        view.render(candidateContainer, tmpNonselected);
+      }
     })
   }
-
-  // const addTodo = () => {
-  //   const inputbox = document.querySelector(view.domstr.inputebox);
-  //   inputbox.addEventListener('keyup', (event) => {
-  //     if (event.key === 'Enter' && event.target.value.trim()) {
-  //       const newTodo = new model.Todo(event.target.value);
-  //       model.addTodo(newTodo).then(todo => {
-  //         state.todolist = [todo, ...state.todolist];
-  //       });
-  //       event.target.value = '';
-  //     }
-  //   });
-  // };
 
   const init = () => {
     model.getCourseList().then((courses) => {

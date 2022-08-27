@@ -18,12 +18,16 @@
     <main class="content">
         <section class="main-container">
             <div class="courselist">
-                <header class="courses__header">Available Courses</header>
+                <div class="courses__header">
+                    <header>Available Courses</header>
+                </div>
                 <ul id="courselist_containter">
                 </ul>
             </div>
             <div class="courselist">
-                <header class="courses__header">Selected Courses</header>
+                <div class="courses__header">
+                    <header>Selected Courses</header>
+                </div>
                 <ul id="selectedcourselist_container">
                 </ul>
             </div>
@@ -35,7 +39,9 @@
         <div class="info">
             <div>Total Credits: </div>
             <div id="sum-of-credit">0</div>
-            <div id="select-button" data-confirmed="0">Select</div>
+            <div>
+                <button id="select-button" data-confirmed="0">Select</button>
+            </div>
         </div>
     </section>
 

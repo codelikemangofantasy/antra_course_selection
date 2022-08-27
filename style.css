@@ -36,8 +36,7 @@
   
     font-size: 3rem;
     text-transform: capitalize;
-    letter-spacing: 2px;
-    font-weight: 700;
+    font-weight: 600;
 
     display: flex;
     justify-content: center;
@@ -47,7 +46,7 @@
     {
     background-color: white;
   
-    height: calc(70% - var(--height-header));
+    height: calc(60% - var(--height-header));
     width: 100%;
   
     display: flex;
@@ -109,8 +108,13 @@
 
   }
   .courses__header {
-    font-size: 1.5rem;
+    height: 10%;
+    font-size: 1rem;
     text-align: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   ul li {
     display: flex;
@@ -140,7 +144,7 @@
     background-color: rgb(221, 239, 221);
   }
   ul {
-    height: calc(100% - var(--height-todolist-header) * 1);
+    height: 90%;
     overflow: auto;
     overflow-x: hidden;
   }
@@ -152,7 +156,7 @@
   }
 
   ul li.selected-course {
-    background-color: blue;
+    background-color: rgba(6,190,254,255);
   }
   
   .info-container {
@@ -167,6 +171,7 @@
 
   .info div {
     width: 6rem;
+    text-align: center;
   }
 
   #select-button {
